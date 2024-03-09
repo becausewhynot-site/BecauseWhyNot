@@ -1,11 +1,11 @@
 # becausewhynot
-The Runescape Private Sever project no one asked for, Why Because Why not?
+Because Why Not! Is based on WhiteScape 3.x a very old runescape private server initally based on BlakeScape.
 
-# goals
-Seeing the whole idea came from a drunken stuper we will see what rabbit hole this leads down, Hopefully alice won't mind ;p
+Well What do you plan on doing on this grand adventure? Well get to reading the idea
 
-# source-info
-The Java Application base is: WhiteScape 3.x If you are wondering this a step up or down from blakescape yes its that old!
+# grand adventure
+This idea for a grand adventure came from a drunken stuper and i am pretty lit still so bare with me.
 
-# who iz u?!
-If you know me you know me if not you have never been on the recieving end of my wraith. this sums up who iz i!
+Imagine you are a new runescape player and its the year 2006 (why no idea), You login to the main game and find that the normal runescape was hard but you wanted something fun but still decent to play. Well you end up playing PimpScape, hellzend, Allstarscape, CheezeScape, CheatSakape, TomScape, Silab Servers and the list goes on the point is i wanted to create something insane from my past servers.
+
+Boom the sever no one wanted and i just heard bet! They asked why ? Because why not!
