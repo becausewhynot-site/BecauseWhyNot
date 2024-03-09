@@ -1,15 +1,13 @@
-import java.io.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public abstract class Player {
-	public void println_debug(String str)
-	{
-		System.out.println("[player-"+playerId+"]: "+str);
+	public void println_debug(String str) {
+		System.out.println("[player-" + playerId + "]: " + str);
 	}
-	public void println(String str)
-	{
-		System.out.println("[player-"+playerId+"]: "+str);
+
+	public void println(String str) {
+		System.out.println("[player-" + playerId + "]: " + str);
 	}
 
 	// some remarks: one map region is 8x8
@@ -20,17 +18,17 @@ public abstract class Player {
 
 	public Player(int _playerId) {
 		playerId = _playerId;
-		//playerName = "player"+playerId;
-		playerRights = 0; //player rights
+		// playerName = "player"+playerId;
+		playerRights = 0; // player rights
 
-		for (int i = 0; i < playerItems.length; i++) { //Setting player items
+		for (int i = 0; i < playerItems.length; i++) { // Setting player items
 			playerItems[i] = 0;
 		}
-		for (int i = 0; i<playerItemsN.length; i++) { //Setting Item amounts
+		for (int i = 0; i < playerItemsN.length; i++) { // Setting Item amounts
 			playerItemsN[i] = 0;
 		}
 
-		for (int i=0; i<playerLevel.length; i++) { //Setting Levels
+		for (int i = 0; i < playerLevel.length; i++) { // Setting Levels
 			if (i == 3) {
 				playerLevel[i] = 10;
 				playerXP[i] = 1155;
@@ -40,15 +38,15 @@ public abstract class Player {
 			}
 		}
 
-		for (int i = 0; i< playerBankSize; i++) { //Setting bank items
+		for (int i = 0; i < playerBankSize; i++) { // Setting bank items
 			bankItems[i] = 0;
 		}
 
-		for (int i = 0; i < playerBankSize; i++) { //Setting bank item amounts
+		for (int i = 0; i < playerBankSize; i++) { // Setting bank item amounts
 			bankItemsN[i] = 0;
 		}
 
-		//Setting Welcomescreen information
+		// Setting Welcomescreen information
 		Calendar cal = new GregorianCalendar();
 		int day = cal.get(Calendar.DAY_OF_MONTH);
 		int month = cal.get(Calendar.MONTH);
@@ -59,7 +57,7 @@ public abstract class Player {
 		playerIsMember = 1;
 		playerMessages = 0;
 
-		//Setting player standard look
+		// Setting player standard look
 		playerLook[0] = 0;
 		playerLook[1] = 7;
 		playerLook[2] = 8;
@@ -67,50 +65,41 @@ public abstract class Player {
 		playerLook[4] = 5;
 		playerLook[5] = 0;
 
-		//Giving the player an unique look
-		playerEquipment[playerHat]=Item.randomHat();
-		playerEquipment[playerCape]=Item.randomCape();
-		playerEquipment[playerAmulet]=Item.randomAmulet();
-		playerEquipment[playerChest]=Item.randomBody();
-		playerEquipment[playerShield]=Item.randomShield();
-		playerEquipment[playerLegs]=Item.randomLegs();
-		playerEquipment[playerHands]=Item.randomGloves();
-		playerEquipment[playerFeet]=Item.randomBoots();
-		playerEquipment[playerRing]=Item.randomRing();
-		playerEquipment[playerArrows]=Item.randomArrows();
-		playerEquipment[playerWeapon]=1275;
+		// Giving the player an unique look
+		playerEquipment[playerHat] = Item.randomHat();
+		playerEquipment[playerCape] = Item.randomCape();
+		playerEquipment[playerAmulet] = Item.randomAmulet();
+		playerEquipment[playerChest] = Item.randomBody();
+		playerEquipment[playerShield] = Item.randomShield();
+		playerEquipment[playerLegs] = Item.randomLegs();
+		playerEquipment[playerHands] = Item.randomGloves();
+		playerEquipment[playerFeet] = Item.randomBoots();
+		playerEquipment[playerRing] = Item.randomRing();
+		playerEquipment[playerArrows] = Item.randomArrows();
+		playerEquipment[playerWeapon] = 1275;
 
-/*
-0-9: male head
-10-17: male beard
-18-25: male torso
-26-32: male arms
-33-35: male hands
-36-41: male legs
-42-44: male feet
+		/*
+		 * 0-9: male head 10-17: male beard 18-25: male torso 26-32: male arms 33-35:
+		 * male hands 36-41: male legs 42-44: male feet
+		 * 
+		 * 45-55: fem head 56-60: fem torso 61-66: fem arms 67-69: fem hands 70-78: fem
+		 * legs 79-81: fem feet
+		 */
 
-45-55: fem head
-56-60: fem torso
-61-66: fem arms
-67-69: fem hands
-70-78: fem legs
-79-81: fem feet
-*/
+		pHead = 7;
+		pTorso = 25;
+		pArms = 29;
+		pHands = 35;
+		pLegs = 39;
+		pFeet = 44;
+		pBeard = 14;
 
-		pHead=7;
-		pTorso=25;
-		pArms=29;
-		pHands=35;
-		pLegs=39;
-		pFeet=44;
-		pBeard=14;
-
-	      
 		// initial x and y coordinates of the player
 		heightLevel = 0;
-		// the first call to updateThisPlayerMovement() will craft the proper initialization packet
-		teleportToX = 3254;//3072;
-		teleportToY = 3420;//3312;
+		// the first call to updateThisPlayerMovement() will craft the proper
+		// initialization packet
+		teleportToX = 3254;// 3072;
+		teleportToY = 3420;// 3312;
 
 		// client initially doesn't know those values yet
 		absX = absY = -1;
@@ -121,9 +110,11 @@ public abstract class Player {
 
 	void destruct() {
 		playerListSize = 0;
-		for(int i = 0; i < maxPlayerListSize; i++) playerList[i] = null;
+		for (int i = 0; i < maxPlayerListSize; i++)
+			playerList[i] = null;
 		npcListSize = 0;
-		for(int i = 0; i < maxNPCListSize; i++) npcList[i] = null;
+		for (int i = 0; i < maxNPCListSize; i++)
+			npcList[i] = null;
 
 		absX = absY = -1;
 		mapRegionX = mapRegionY = -1;
@@ -153,30 +144,29 @@ public abstract class Player {
 	public int tradeStatus = 0;
 	public boolean tradeUpdateOther = false;
 	public boolean tradeOtherDeclined = false;
-	public int[] playerTItems = new int[28]; //player Trade Items
+	public int[] playerTItems = new int[28]; // player Trade Items
 	public int[] playerTItemsN = new int[28];
-	public int[] playerOTItems = new int[28]; //player Other Trade Items
+	public int[] playerOTItems = new int[28]; // player Other Trade Items
 	public int[] playerOTItemsN = new int[28];
 
 	public boolean takeAsNote = false;
-	
+
 	public abstract void initialize();
 
 	public abstract void update();
 
-	public int playerId = -1;		// -1 denotes world is full, otherwise this is the playerId
-									// corresponds to the index in Player players[]
+	public int playerId = -1; // -1 denotes world is full, otherwise this is the playerId
+								// corresponds to the index in Player players[]
 
-	public String playerName = null;			// name of the connecting client
-	public String playerPass = null;			// name of the connecting client
+	public String playerName = null; // name of the connecting client
+	public String playerPass = null; // name of the connecting client
 	public boolean isRunning2 = false;
 
-
-	public int playerRights;		// 0=normal player, 1=player mod, 2=real mod, 3=admin?
+	public int playerRights; // 0=normal player, 1=player mod, 2=real mod, 3=admin?
 
 	public PlayerHandler handler = null;
 
-	public int maxItemAmount = /*2000000000*/999999999;
+	public int maxItemAmount = /* 2000000000 */999999999;
 
 	public int[] playerItems = new int[28];
 	public int[] playerItemsN = new int[28];
@@ -186,8 +176,7 @@ public abstract class Player {
 	public int[] bankItemsN = new int[800];
 	public boolean bankNotes = false;
 
-
-	//Default appearance
+	// Default appearance
 	public int pHead;
 	public int pTorso;
 	public int pArms;
@@ -199,7 +188,7 @@ public abstract class Player {
 
 	public int[] playerEquipment = new int[14];
 	public int[] playerEquipmentN = new int[14];
-	
+
 	public int playerHat = 0;
 	public int playerCape = 1;
 	public int playerAmulet = 2;
@@ -240,128 +229,137 @@ public abstract class Player {
 	public int[] playerXP = new int[25];
 
 	// the list of players currently seen by thisPlayer
-	// this has to be remembered because the client will build up exactly the same list
+	// this has to be remembered because the client will build up exactly the same
+	// list
 	// and will be used on subsequent player movement update packets for efficiency
 	public final static int maxPlayerListSize = PlayerHandler.maxPlayers;
 	public Player playerList[] = new Player[maxPlayerListSize];
 	public int playerListSize = 0;
 	// bit at position playerId is set to 1 incase player is currently in playerList
-	public byte playerInListBitmap[] = new byte[(PlayerHandler.maxPlayers+7) >> 3];
+	public byte playerInListBitmap[] = new byte[(PlayerHandler.maxPlayers + 7) >> 3];
 
 	// the list of npcs currently seen by thisPlayer
-	// this has to be remembered because the client will build up exactly the same list
+	// this has to be remembered because the client will build up exactly the same
+	// list
 	// and will be used on subsequent player movement update packets for efficiency
-	public final static int maxNPCListSize = NPCHandler.maxNPCs;
-	public NPC npcList[] = new NPC[maxNPCListSize];
+	public final static int maxNPCListSize = NpcHandler.maxNPCs;
+	public Npc npcList[] = new Npc[maxNPCListSize];
 	public int npcListSize = 0;
 	// bit at position npcId is set to 1 incase player is currently in playerList
-	public byte npcInListBitmap[] = new byte[(NPCHandler.maxNPCs+7) >> 3];
+	public byte npcInListBitmap[] = new byte[(NpcHandler.maxNPCs + 7) >> 3];
 
-
-	// supported within the packet adding new players are coordinates relative to thisPlayer
+	// supported within the packet adding new players are coordinates relative to
+	// thisPlayer
 	// that are >= -16 and <= 15 (i.e. a signed 5-bit number)
 	public boolean withinDistance(Player otherPlr) {
-		if(heightLevel != otherPlr.heightLevel) return false;
-		int deltaX = otherPlr.absX-absX, deltaY = otherPlr.absY-absY;
+		if (heightLevel != otherPlr.heightLevel)
+			return false;
+		int deltaX = otherPlr.absX - absX, deltaY = otherPlr.absY - absY;
 		return deltaX <= 15 && deltaX >= -16 && deltaY <= 15 && deltaY >= -16;
 	}
 
-	public boolean withinDistance(NPC npc) {
-		if (heightLevel != npc.heightLevel) return false;
-		if (npc.NeedRespawn == true) return false;
-		int deltaX = npc.absX-absX, deltaY = npc.absY-absY;
+	public boolean withinDistance(Npc npc) {
+		if (heightLevel != npc.heightLevel)
+			return false;
+		if (npc.NeedRespawn == true)
+			return false;
+		int deltaX = npc.absX - absX, deltaY = npc.absY - absY;
 		return deltaX <= 15 && deltaX >= -16 && deltaY <= 15 && deltaY >= -16;
 	}
 
-
-	public int mapRegionX, mapRegionY;		// the map region the player is currently in
-	public int absX, absY;					// absolute x/y coordinates
-	public int currentX, currentY;			// relative x/y coordinates (to map region)
+	public int mapRegionX, mapRegionY; // the map region the player is currently in
+	public int absX, absY; // absolute x/y coordinates
+	public int currentX, currentY; // relative x/y coordinates (to map region)
 	// Note that mapRegionX*8+currentX yields absX
-	public int heightLevel;		// 0-3 supported by the client
+	public int heightLevel; // 0-3 supported by the client
 
-	public boolean updateRequired = true;		// set to true if, in general, updating for this player is required
-												// i.e. this should be set to true whenever any of the other 
-												// XXXUpdateRequired flags are set to true
-												// Important: this does NOT include chatTextUpdateRequired!
+	public boolean updateRequired = true; // set to true if, in general, updating for this player is required
+											// i.e. this should be set to true whenever any of the other
+											// XXXUpdateRequired flags are set to true
+											// Important: this does NOT include chatTextUpdateRequired!
 
 	// walking related stuff - walking queue etc...
 	public static final int walkingQueueSize = 50;
 	public int walkingQueueX[] = new int[walkingQueueSize], walkingQueueY[] = new int[walkingQueueSize];
-	public int wQueueReadPtr = 0;		// points to slot for reading from queue
-	public int wQueueWritePtr = 0;		// points to (first free) slot for writing to the queue
+	public int wQueueReadPtr = 0; // points to slot for reading from queue
+	public int wQueueWritePtr = 0; // points to (first free) slot for writing to the queue
 	public boolean isRunning = false;
-	public int teleportToX = -1, teleportToY = -1;	// contain absolute x/y coordinates of destination we want to teleport to
-
-
+	public int teleportToX = -1, teleportToY = -1; // contain absolute x/y coordinates of destination we want to
+													// teleport to
 
 	public void resetWalkingQueue() {
 		wQueueReadPtr = wQueueWritePtr = 0;
 		// properly initialize this to make the "travel back" algorithm work
-		for(int i = 0; i < walkingQueueSize; i++) {
+		for (int i = 0; i < walkingQueueSize; i++) {
 			walkingQueueX[i] = currentX;
 			walkingQueueY[i] = currentY;
 		}
 	}
 
 	public void addToWalkingQueue(int x, int y) {
-		int next = (wQueueWritePtr+1) % walkingQueueSize;
-		if(next == wQueueWritePtr) return;		// walking queue full, silently discard the data
+		int next = (wQueueWritePtr + 1) % walkingQueueSize;
+		if (next == wQueueWritePtr)
+			return; // walking queue full, silently discard the data
 		walkingQueueX[wQueueWritePtr] = x;
 		walkingQueueY[wQueueWritePtr] = y;
-		wQueueWritePtr = next; 
+		wQueueWritePtr = next;
 	}
 
 	// returns 0-7 for next walking direction or -1, if we're not moving
 	public int getNextWalkingDirection() {
-		if(wQueueReadPtr == wQueueWritePtr) return -1;		// walking queue empty
+		if (wQueueReadPtr == wQueueWritePtr)
+			return -1; // walking queue empty
 		int dir;
 		do {
-			dir = misc.direction(currentX, currentY, walkingQueueX[wQueueReadPtr], walkingQueueY[wQueueReadPtr]);
-			if(dir == -1) wQueueReadPtr = (wQueueReadPtr+1) % walkingQueueSize;
-			else if((dir&1) != 0) {
+			dir = Misc.direction(currentX, currentY, walkingQueueX[wQueueReadPtr], walkingQueueY[wQueueReadPtr]);
+			if (dir == -1)
+				wQueueReadPtr = (wQueueReadPtr + 1) % walkingQueueSize;
+			else if ((dir & 1) != 0) {
 				println_debug("Invalid waypoint in walking queue!");
 				resetWalkingQueue();
 				return -1;
 			}
-		} while(dir == -1 && wQueueReadPtr != wQueueWritePtr);
-		if(dir == -1) return -1;
+		} while (dir == -1 && wQueueReadPtr != wQueueWritePtr);
+		if (dir == -1)
+			return -1;
 		dir >>= 1;
-		currentX += misc.directionDeltaX[dir];
-		currentY += misc.directionDeltaY[dir];
-		absX += misc.directionDeltaX[dir];
-		absY += misc.directionDeltaY[dir];
+		currentX += Misc.directionDeltaX[dir];
+		currentY += Misc.directionDeltaY[dir];
+		absX += Misc.directionDeltaX[dir];
+		absY += Misc.directionDeltaY[dir];
 		return dir;
 	}
 
-	// calculates directions of player movement, or the new coordinates when teleporting
-	public boolean didTeleport = false;		// set to true if char did teleport in this cycle
+	// calculates directions of player movement, or the new coordinates when
+	// teleporting
+	public boolean didTeleport = false; // set to true if char did teleport in this cycle
 	public boolean mapRegionDidChange = false;
-	public int dir1 = -1, dir2 = -1;		// direction char is going in this cycle
-        public int poimiX = 0, poimiY = 0;
+	public int dir1 = -1, dir2 = -1; // direction char is going in this cycle
+	public int poimiX = 0, poimiY = 0;
+
 	public void getNextPlayerMovement() {
 		mapRegionDidChange = false;
 		didTeleport = false;
 		dir1 = dir2 = -1;
 
-		if(teleportToX != -1 && teleportToY != -1) {
+		if (teleportToX != -1 && teleportToY != -1) {
 			mapRegionDidChange = true;
-			if(mapRegionX != -1 && mapRegionY != -1) {
+			if (mapRegionX != -1 && mapRegionY != -1) {
 				// check, whether destination is within current map region
-				int relX = teleportToX-mapRegionX*8, relY = teleportToY-mapRegionY*8;
-				if(relX >= 2*8 && relX < 11*8 && relY >= 2*8 && relY < 11*8)
+				int relX = teleportToX - mapRegionX * 8, relY = teleportToY - mapRegionY * 8;
+				if (relX >= 2 * 8 && relX < 11 * 8 && relY >= 2 * 8 && relY < 11 * 8)
 					mapRegionDidChange = false;
 			}
-			if(mapRegionDidChange) {
+			if (mapRegionDidChange) {
 				// after map region change the relative coordinates range between 48 - 55
-				mapRegionX = (teleportToX>>3)-6;
-				mapRegionY = (teleportToY>>3)-6;
+				mapRegionX = (teleportToX >> 3) - 6;
+				mapRegionY = (teleportToY >> 3) - 6;
 
-				playerListSize = 0;		// completely rebuild playerList after teleport AND map region change
+				playerListSize = 0; // completely rebuild playerList after teleport AND map region change
 			}
 
-			currentX = teleportToX - 8*mapRegionX;
-			currentY = teleportToY - 8*mapRegionY;
+			currentX = teleportToX - 8 * mapRegionX;
+			currentY = teleportToY - 8 * mapRegionY;
 			absX = teleportToX;
 			absY = teleportToY;
 			resetWalkingQueue();
@@ -370,38 +368,39 @@ public abstract class Player {
 			didTeleport = true;
 		} else {
 			dir1 = getNextWalkingDirection();
-			if(dir1 == -1) return;		// standing
+			if (dir1 == -1)
+				return; // standing
 
-			if(isRunning) {
+			if (isRunning) {
 				dir2 = getNextWalkingDirection();
 			}
 
 			// check, if we're required to change the map region
 			int deltaX = 0, deltaY = 0;
-			if(currentX < 2*8) {
-				deltaX = 4*8;
+			if (currentX < 2 * 8) {
+				deltaX = 4 * 8;
 				mapRegionX -= 4;
 				mapRegionDidChange = true;
-			} else if(currentX >= 11*8) {
-				deltaX = -4*8;
+			} else if (currentX >= 11 * 8) {
+				deltaX = -4 * 8;
 				mapRegionX += 4;
 				mapRegionDidChange = true;
 			}
-			if(currentY < 2*8) {
-				deltaY = 4*8;
+			if (currentY < 2 * 8) {
+				deltaY = 4 * 8;
 				mapRegionY -= 4;
 				mapRegionDidChange = true;
-			} else if(currentY >= 11*8) {
-				deltaY = -4*8;
+			} else if (currentY >= 11 * 8) {
+				deltaY = -4 * 8;
 				mapRegionY += 4;
 				mapRegionDidChange = true;
 			}
 
-			if(mapRegionDidChange) {
+			if (mapRegionDidChange) {
 				// have to adjust all relative coordinates
 				currentX += deltaX;
 				currentY += deltaY;
-				for(int i = 0; i < walkingQueueSize; i++) {
+				for (int i = 0; i < walkingQueueSize; i++) {
 					walkingQueueX[i] += deltaX;
 					walkingQueueY[i] += deltaY;
 				}
@@ -410,22 +409,23 @@ public abstract class Player {
 		}
 	}
 
-	// handles anything related to character position, i.e. walking,running and teleportation
+	// handles anything related to character position, i.e. walking,running and
+	// teleportation
 	// applies only to the char and the client which is playing it
-	public void updateThisPlayerMovement(stream str) {
-		if(mapRegionDidChange) {
+	public void updateThisPlayerMovement(Stream str) {
+		if (mapRegionDidChange) {
 			str.createFrame(73);
-			str.writeWordA(mapRegionX+6);	// for some reason the client substracts 6 from those values
-			str.writeWord(mapRegionY+6);
+			str.writeWordA(mapRegionX + 6); // for some reason the client substracts 6 from those values
+			str.writeWord(mapRegionY + 6);
 		}
 
-		if(didTeleport == true) {
+		if (didTeleport == true) {
 			str.createFrameVarSizeWord(81);
 			str.initBitAccess();
 			str.writeBits(1, 1);
-			str.writeBits(2, 3);			// updateType
+			str.writeBits(2, 3); // updateType
 			str.writeBits(2, heightLevel);
-			str.writeBits(1, 1);			// set to true, if discarding (clientside) walking queue
+			str.writeBits(1, 1); // set to true, if discarding (clientside) walking queue
 			str.writeBits(1, (updateRequired) ? 1 : 0);
 			str.writeBits(7, currentY);
 			str.writeBits(7, currentX);
@@ -435,14 +435,14 @@ public abstract class Player {
 				SafeMyLife = false;
 				IsUsingSkill = false;
 			}
-			return ;
+			return;
 		}
 
-		if(dir1 == -1) {
+		if (dir1 == -1) {
 			// don't have to update the character position, because we're just standing
 			str.createFrameVarSizeWord(81);
 			str.initBitAccess();
-			if(updateRequired) {
+			if (updateRequired) {
 				// tell client there's an update block appended at the end
 				str.writeBits(1, 1);
 				str.writeBits(2, 0);
@@ -458,19 +458,23 @@ public abstract class Player {
 			str.initBitAccess();
 			str.writeBits(1, 1);
 
-			if(dir2 == -1) {
+			if (dir2 == -1) {
 				// send "walking packet"
-				str.writeBits(2, 1);		// updateType
-				str.writeBits(3, misc.xlateDirectionToClient[dir1]);
-				if(updateRequired) str.writeBits(1, 1);		// tell client there's an update block appended at the end
-				else str.writeBits(1, 0);
+				str.writeBits(2, 1); // updateType
+				str.writeBits(3, Misc.xlateDirectionToClient[dir1]);
+				if (updateRequired)
+					str.writeBits(1, 1); // tell client there's an update block appended at the end
+				else
+					str.writeBits(1, 0);
 			} else {
 				// send "running packet"
-				str.writeBits(2, 2);		// updateType
-				str.writeBits(3, misc.xlateDirectionToClient[dir1]);
-				str.writeBits(3, misc.xlateDirectionToClient[dir2]);
-				if(updateRequired) str.writeBits(1, 1);		// tell client there's an update block appended at the end
-				else str.writeBits(1, 0);
+				str.writeBits(2, 2); // updateType
+				str.writeBits(3, Misc.xlateDirectionToClient[dir1]);
+				str.writeBits(3, Misc.xlateDirectionToClient[dir2]);
+				if (updateRequired)
+					str.writeBits(1, 1); // tell client there's an update block appended at the end
+				else
+					str.writeBits(1, 0);
 				if (playerEnergy > 0) {
 					playerEnergy -= 1;
 				} else {
@@ -481,72 +485,77 @@ public abstract class Player {
 
 	}
 
-	// handles anything related to character position basically walking, running and standing
+	// handles anything related to character position basically walking, running and
+	// standing
 	// applies to only to "non-thisPlayer" characters
-	public void updatePlayerMovement(stream str) {
-		if(dir1 == -1) {
-			// don't have to update the character position, because the char is just standing
-			if(updateRequired || chatTextUpdateRequired) {
+	public void updatePlayerMovement(Stream str) {
+		if (dir1 == -1) {
+			// don't have to update the character position, because the char is just
+			// standing
+			if (updateRequired || chatTextUpdateRequired) {
 				// tell client there's an update block appended at the end
 				str.writeBits(1, 1);
 				str.writeBits(2, 0);
-			}
-			else str.writeBits(1, 0);
-		} else if(dir2 == -1) {
+			} else
+				str.writeBits(1, 0);
+		} else if (dir2 == -1) {
 			// send "walking packet"
 			str.writeBits(1, 1);
 			str.writeBits(2, 1);
-			str.writeBits(3, misc.xlateDirectionToClient[dir1]);
-			str.writeBits(1, (updateRequired || chatTextUpdateRequired) ? 1: 0);
+			str.writeBits(3, Misc.xlateDirectionToClient[dir1]);
+			str.writeBits(1, (updateRequired || chatTextUpdateRequired) ? 1 : 0);
 		} else {
 			// send "running packet"
 			str.writeBits(1, 1);
 			str.writeBits(2, 2);
-			str.writeBits(3, misc.xlateDirectionToClient[dir1]);
-			str.writeBits(3, misc.xlateDirectionToClient[dir2]);
-			str.writeBits(1, (updateRequired || chatTextUpdateRequired) ? 1: 0);
+			str.writeBits(3, Misc.xlateDirectionToClient[dir1]);
+			str.writeBits(3, Misc.xlateDirectionToClient[dir2]);
+			str.writeBits(1, (updateRequired || chatTextUpdateRequired) ? 1 : 0);
 		}
 	}
 
-	// a bitmap of players that we want to keep track of whether char appearance has changed so
-	// we know if we have to transmit those or can make use of the cached char appearances in the client
-	public byte cachedPropertiesBitmap[] = new byte[(PlayerHandler.maxPlayers+7) >> 3];
+	// a bitmap of players that we want to keep track of whether char appearance has
+	// changed so
+	// we know if we have to transmit those or can make use of the cached char
+	// appearances in the client
+	public byte cachedPropertiesBitmap[] = new byte[(PlayerHandler.maxPlayers + 7) >> 3];
 
-	public void addNewNPC(NPC npc, stream str, stream updateBlock)
-	{
+	public void addNewNPC(Npc npc, Stream str, Stream updateBlock) {
 		int id = npc.npcId;
-		npcInListBitmap[id >> 3] |= 1 << (id&7);	// set the flag
+		npcInListBitmap[id >> 3] |= 1 << (id & 7); // set the flag
 		npcList[npcListSize++] = npc;
 
-		str.writeBits(14, id);	// client doesn't seem to like id=0
-		
-		int z = npc.absY-absY;
-		if(z < 0) z += 32;
-		str.writeBits(5, z);	// y coordinate relative to thisPlayer
-		z = npc.absX-absX;
-		if(z < 0) z += 32;
-		str.writeBits(5, z);	// x coordinate relative to thisPlayer
+		str.writeBits(14, id); // client doesn't seem to like id=0
 
-		str.writeBits(1, 0); //something??
+		int z = npc.absY - absY;
+		if (z < 0)
+			z += 32;
+		str.writeBits(5, z); // y coordinate relative to thisPlayer
+		z = npc.absX - absX;
+		if (z < 0)
+			z += 32;
+		str.writeBits(5, z); // x coordinate relative to thisPlayer
+
+		str.writeBits(1, 0); // something??
 		str.writeBits(12, npc.npcType);
-		
+
 		boolean savedUpdateRequired = npc.updateRequired;
 		npc.updateRequired = true;
 		npc.appendNPCUpdateBlock(updateBlock);
-		npc.updateRequired = savedUpdateRequired;	
+		npc.updateRequired = savedUpdateRequired;
 		str.writeBits(1, 1); // update required
 	}
-		
-	public void addNewPlayer(Player plr, stream str, stream updateBlock) {
+
+	public void addNewPlayer(Player plr, Stream str, Stream updateBlock) {
 		int id = plr.playerId;
-		playerInListBitmap[id >> 3] |= 1 << (id&7);	// set the flag
+		playerInListBitmap[id >> 3] |= 1 << (id & 7); // set the flag
 		playerList[playerListSize++] = plr;
 
-		str.writeBits(11, id);	// client doesn't seem to like id=0
+		str.writeBits(11, id); // client doesn't seem to like id=0
 
 		// TODO: properly implement the character appearance handling
 		// send this everytime for now and don't make use of the cached ones in client
-		str.writeBits(1, 1);	// set to true, if player definitions follow below
+		str.writeBits(1, 1); // set to true, if player definitions follow below
 		boolean savedFlag = plr.appearanceUpdateRequired;
 		boolean savedUpdateRequired = plr.updateRequired;
 		plr.appearanceUpdateRequired = true;
@@ -555,37 +564,38 @@ public abstract class Player {
 		plr.appearanceUpdateRequired = savedFlag;
 		plr.updateRequired = savedUpdateRequired;
 
-
-		str.writeBits(1, 1);	// set to true, if we want to discard the (clientside) walking queue
+		str.writeBits(1, 1); // set to true, if we want to discard the (clientside) walking queue
 								// no idea what this might be useful for yet
-		int z = plr.absY-absY;
-		if(z < 0) z += 32;
-		str.writeBits(5, z);	// y coordinate relative to thisPlayer
-		z = plr.absX-absX;
-		if(z < 0) z += 32;
-		str.writeBits(5, z);	// x coordinate relative to thisPlayer
+		int z = plr.absY - absY;
+		if (z < 0)
+			z += 32;
+		str.writeBits(5, z); // y coordinate relative to thisPlayer
+		z = plr.absX - absX;
+		if (z < 0)
+			z += 32;
+		str.writeBits(5, z); // x coordinate relative to thisPlayer
 	}
-
-
 
 	// player appearance related stuff
-	protected boolean appearanceUpdateRequired = true;	// set to true if the player appearance wasn't synchronized
+	protected boolean appearanceUpdateRequired = true; // set to true if the player appearance wasn't synchronized
 														// with the clients yet or changed recently
 
-	protected static stream playerProps;
+	protected static Stream playerProps;
 	static {
-		playerProps = new stream(new byte[100]);
+		playerProps = new Stream(new byte[100]);
 	}
-	protected void appendPlayerAppearance(stream str)
-	{
+
+	protected void appendPlayerAppearance(Stream str) {
 		playerProps.currentOffset = 0;
 
 		// TODO: yet some things to figure out on this block + properly implement this
-		playerProps.writeByte(playerLook[0]);		// player sex. 0=Male and 1=Female
-		playerProps.writeByte(0);		// playerStatusMask - skull, prayers etc alkup 0
+		playerProps.writeByte(playerLook[0]); // player sex. 0=Male and 1=Female
+		playerProps.writeByte(0); // playerStatusMask - skull, prayers etc alkup 0
 
-		// defining the character shape - 12 slots following - 0 denotes a null entry and just a byte is used
-		// slot 0,8,11,1 is head part - missing additional things are beard and eyepatch like things either 11 or 1
+		// defining the character shape - 12 slots following - 0 denotes a null entry
+		// and just a byte is used
+		// slot 0,8,11,1 is head part - missing additional things are beard and eyepatch
+		// like things either 11 or 1
 		// cape, apron, amulet... the remaining things...
 
 		if (isNpc == false) {
@@ -612,7 +622,7 @@ public abstract class Player {
 			if (playerEquipment[playerChest] > 1) {
 				playerProps.writeWord(0x200 + playerEquipment[playerChest]);
 			} else {
-				playerProps.writeWord(0x100+pTorso);
+				playerProps.writeWord(0x100 + pTorso);
 			}
 			if (playerEquipment[playerShield] > 1) {
 				playerProps.writeWord(0x200 + playerEquipment[playerShield]);
@@ -620,29 +630,29 @@ public abstract class Player {
 				playerProps.writeByte(0);
 			}
 			if (!Item.isPlate(playerEquipment[playerChest])) {
-				playerProps.writeWord(0x100+pArms);
+				playerProps.writeWord(0x100 + pArms);
 			} else {
 				playerProps.writeByte(0);
 			}
 			if (playerEquipment[playerLegs] > 1) {
 				playerProps.writeWord(0x200 + playerEquipment[playerLegs]);
 			} else {
-					playerProps.writeWord(0x100+pLegs);
+				playerProps.writeWord(0x100 + pLegs);
 			}
 			if (!Item.isFullHelm(playerEquipment[playerHat]) && !Item.isFullMask(playerEquipment[playerHat])) {
-				playerProps.writeWord(0x100 + pHead);		// head
+				playerProps.writeWord(0x100 + pHead); // head
 			} else {
 				playerProps.writeByte(0);
 			}
 			if (playerEquipment[playerHands] > 1) {
 				playerProps.writeWord(0x200 + playerEquipment[playerHands]);
 			} else {
-				playerProps.writeWord(0x100+pHands);
+				playerProps.writeWord(0x100 + pHands);
 			}
 			if (playerEquipment[playerFeet] > 1) {
 				playerProps.writeWord(0x200 + playerEquipment[playerFeet]);
 			} else {
-				playerProps.writeWord(0x100+pFeet);
+				playerProps.writeWord(0x100 + pFeet);
 			}
 			playerProps.writeByte(0);
 		} else {
@@ -651,81 +661,101 @@ public abstract class Player {
 
 		}
 		// array of 5 bytes defining the colors
-		playerProps.writeByte(playerLook[1]);	// hair color
-		playerProps.writeByte(playerLook[2]);	// torso color.
-		playerProps.writeByte(playerLook[3]);	// leg color
-		playerProps.writeByte(playerLook[4]);	// feet color
-		playerProps.writeByte(playerLook[5]);	// skin color (0-6)
+		playerProps.writeByte(playerLook[1]); // hair color
+		playerProps.writeByte(playerLook[2]); // torso color.
+		playerProps.writeByte(playerLook[3]); // leg color
+		playerProps.writeByte(playerLook[4]); // feet color
+		playerProps.writeByte(playerLook[5]); // skin color (0-6)
 
-		playerProps.writeWord(pEmote);		// standAnimIndex
-		playerProps.writeWord(0x337);		// standTurnAnimIndex
-		playerProps.writeWord(playerSEW);	// walkAnimIndex
-		playerProps.writeWord(0x334);		// turn180AnimIndex
-		playerProps.writeWord(0x335);		// turn90CWAnimIndex
-		playerProps.writeWord(0x336);		// turn90CCWAnimIndex
-		playerProps.writeWord(playerSER);	// runAnimIndex
+		playerProps.writeWord(pEmote); // standAnimIndex
+		playerProps.writeWord(0x337); // standTurnAnimIndex
+		playerProps.writeWord(playerSEW); // walkAnimIndex
+		playerProps.writeWord(0x334); // turn180AnimIndex
+		playerProps.writeWord(0x335); // turn90CWAnimIndex
+		playerProps.writeWord(0x336); // turn90CCWAnimIndex
+		playerProps.writeWord(playerSER); // runAnimIndex
 
-		playerProps.writeQWord(misc.playerNameToInt64(playerName));
+		playerProps.writeQWord(Misc.playerNameToInt64(playerName));
 
-		//Stat fix, combat decreases when your hp or any of these skills get lowerd, this fixes that problem.
-		/*int att = (int)((double)(getLevelForXP(playerXP[0])) * 0.325);
-		int def = (int)((double)(getLevelForXP(playerXP[1])) * 0.25);
-		int str = (int)((double)(getLevelForXP(playerXP[2])) * 0.325);
-		int hit = (int)((double)(getLevelForXP(playerXP[3])) * 0.25);
-		int mag = (int)((double)(getLevelForXP(playerXP[4])) * 0.4875);
-		int pra = (int)((double)(getLevelForXP(playerXP[5])) * 0.125);
-		int ran = (int)((double)(getLevelForXP(playerXP[6])) * 0.4875);*/
+		// Stat fix, combat decreases when your hp or any of these skills get lowerd,
+		// this fixes that problem.
+		/*
+		 * int att = (int)((double)(getLevelForXP(playerXP[0])) * 0.325); int def =
+		 * (int)((double)(getLevelForXP(playerXP[1])) * 0.25); int str =
+		 * (int)((double)(getLevelForXP(playerXP[2])) * 0.325); int hit =
+		 * (int)((double)(getLevelForXP(playerXP[3])) * 0.25); int mag =
+		 * (int)((double)(getLevelForXP(playerXP[4])) * 0.4875); int pra =
+		 * (int)((double)(getLevelForXP(playerXP[5])) * 0.125); int ran =
+		 * (int)((double)(getLevelForXP(playerXP[6])) * 0.4875);
+		 */
 
-		int mag = (int)((double)(getLevelForXP(playerXP[4])) * 1.5);
-		int ran = (int)((double)(getLevelForXP(playerXP[6])) * 1.5);
-		int attstr = (int)((double)(getLevelForXP(playerXP[0])) + (double)(getLevelForXP(playerXP[2])));
+		int mag = (int) ((double) (getLevelForXP(playerXP[4])) * 1.5);
+		int ran = (int) ((double) (getLevelForXP(playerXP[6])) * 1.5);
+		int attstr = (int) ((double) (getLevelForXP(playerXP[0])) + (double) (getLevelForXP(playerXP[2])));
 
 		int combatLevel = 0;
 		if (ran > attstr) {
-			combatLevel = (int)(((double)(getLevelForXP(playerXP[1])) * 0.25) + ((double)(getLevelForXP(playerXP[3])) * 0.25) + ((double)(getLevelForXP(playerXP[5])) * 0.125) + ((double)(getLevelForXP(playerXP[6])) * 0.4875));
+			combatLevel = (int) (((double) (getLevelForXP(playerXP[1])) * 0.25)
+					+ ((double) (getLevelForXP(playerXP[3])) * 0.25) + ((double) (getLevelForXP(playerXP[5])) * 0.125)
+					+ ((double) (getLevelForXP(playerXP[6])) * 0.4875));
 		} else if (mag > attstr) {
-			combatLevel = (int)(((double)(getLevelForXP(playerXP[1])) * 0.25) + ((double)(getLevelForXP(playerXP[3])) * 0.25) + ((double)(getLevelForXP(playerXP[5])) * 0.125) + ((double)(getLevelForXP(playerXP[4])) * 0.4875));
+			combatLevel = (int) (((double) (getLevelForXP(playerXP[1])) * 0.25)
+					+ ((double) (getLevelForXP(playerXP[3])) * 0.25) + ((double) (getLevelForXP(playerXP[5])) * 0.125)
+					+ ((double) (getLevelForXP(playerXP[4])) * 0.4875));
 		} else {
-			combatLevel = (int)(((double)(getLevelForXP(playerXP[1])) * 0.25) + ((double)(getLevelForXP(playerXP[3])) * 0.25) + ((double)(getLevelForXP(playerXP[5])) * 0.125) + ((double)(getLevelForXP(playerXP[0])) * 0.325) + ((double)(getLevelForXP(playerXP[2])) * 0.325));
+			combatLevel = (int) (((double) (getLevelForXP(playerXP[1])) * 0.25)
+					+ ((double) (getLevelForXP(playerXP[3])) * 0.25) + ((double) (getLevelForXP(playerXP[5])) * 0.125)
+					+ ((double) (getLevelForXP(playerXP[0])) * 0.325)
+					+ ((double) (getLevelForXP(playerXP[2])) * 0.325));
 		}
-		playerProps.writeByte(combatLevel);		// combat level
-		playerProps.writeWord(0);			// incase != 0, writes skill-%d
+		playerProps.writeByte(combatLevel); // combat level
+		playerProps.writeWord(0); // incase != 0, writes skill-%d
 
-		str.writeByteC(playerProps.currentOffset);		// size of player appearance block
+		str.writeByteC(playerProps.currentOffset); // size of player appearance block
 		str.writeBytes(playerProps.buffer, playerProps.currentOffset, 0);
- 	}
+	}
 
 	protected boolean chatTextUpdateRequired = false;
 	protected byte chatText[] = new byte[4096], chatTextSize = 0;
 	protected int chatTextEffects = 0, chatTextColor = 0;
-	protected void appendPlayerChatText(stream str) {
-		str.writeWordBigEndian(((chatTextColor&0xFF) << 8) + (chatTextEffects&0xFF));
+
+	protected void appendPlayerChatText(Stream str) {
+		str.writeWordBigEndian(((chatTextColor & 0xFF) << 8) + (chatTextEffects & 0xFF));
 		str.writeByte(playerRights);
-		str.writeByteC(chatTextSize);		// no more than 256 bytes!!!
+		str.writeByteC(chatTextSize); // no more than 256 bytes!!!
 		str.writeBytes_reverse(chatText, chatTextSize, 0);
 	}
 
-	public void appendPlayerUpdateBlock(stream str) {
-		if(!updateRequired && !chatTextUpdateRequired) return ;		// nothing required
+	public void appendPlayerUpdateBlock(Stream str) {
+		if (!updateRequired && !chatTextUpdateRequired)
+			return; // nothing required
 		int updateMask = 0;
-		if(chatTextUpdateRequired) updateMask |= 0x80;
-		if(appearanceUpdateRequired) updateMask |= 0x10;
-		if(hitUpdateRequired) updateMask |= 0x20;
-		if(dirUpdateRequired) updateMask |= 0x40;
+		if (chatTextUpdateRequired)
+			updateMask |= 0x80;
+		if (appearanceUpdateRequired)
+			updateMask |= 0x10;
+		if (hitUpdateRequired)
+			updateMask |= 0x20;
+		if (dirUpdateRequired)
+			updateMask |= 0x40;
 
-		if(updateMask >= 0x100) {
+		if (updateMask >= 0x100) {
 			// byte isn't sufficient
-			updateMask |= 0x40;			// indication for the client that updateMask is stored in a word
+			updateMask |= 0x40; // indication for the client that updateMask is stored in a word
 			str.writeByte(updateMask & 0xFF);
 			str.writeByte(updateMask >> 8);
-		}
-		else str.writeByte(updateMask);
+		} else
+			str.writeByte(updateMask);
 
 		// now writing the various update blocks itself - note that their order crucial
-		if(chatTextUpdateRequired) appendPlayerChatText(str);
-		if(appearanceUpdateRequired) appendPlayerAppearance(str);
-		if(hitUpdateRequired) appendHitUpdate(str);
-		if(dirUpdateRequired) appendDirUpdate(str);
+		if (chatTextUpdateRequired)
+			appendPlayerChatText(str);
+		if (appearanceUpdateRequired)
+			appendPlayerAppearance(str);
+		if (hitUpdateRequired)
+			appendHitUpdate(str);
+		if (dirUpdateRequired)
+			appendDirUpdate(str);
 
 		// TODO: add the various other update blocks
 
@@ -739,8 +769,6 @@ public abstract class Player {
 		dirUpdateRequired = false;
 		IsStair = false;
 	}
-
-
 
 	protected static int newWalkCmdX[] = new int[walkingQueueSize];
 	protected static int newWalkCmdY[] = new int[walkingQueueSize];
@@ -756,108 +784,115 @@ public abstract class Player {
 		newWalkCmdSteps = 0;
 	}
 
-	// is being called regularily every 500ms - do any automatic player actions herein
+	// is being called regularily every 500ms - do any automatic player actions
+	// herein
 	public abstract boolean process();
 
-	public void postProcessing()
-	{
-		if(newWalkCmdSteps > 0) {
+	public void postProcessing() {
+		if (newWalkCmdSteps > 0) {
 			// place this into walking queue
-			// care must be taken and we can't just append this because usually the starting point (clientside) of
-			// this packet and the current position (serverside) do not coincide. Therefore we might have to go
-			// back in time in order to find a proper connecting vertex. This is also the origin of the character
-			// walking back and forth when there's noticeable lag and we keep on seeding walk commands.
-			int firstX = newWalkCmdX[0], firstY = newWalkCmdY[0];	// the point we need to connect to from our current position...
+			// care must be taken and we can't just append this because usually the starting
+			// point (clientside) of
+			// this packet and the current position (serverside) do not coincide. Therefore
+			// we might have to go
+			// back in time in order to find a proper connecting vertex. This is also the
+			// origin of the character
+			// walking back and forth when there's noticeable lag and we keep on seeding
+			// walk commands.
+			int firstX = newWalkCmdX[0], firstY = newWalkCmdY[0]; // the point we need to connect to from our current
+																	// position...
 
 			// travel backwards to find a proper connection vertex
 			int lastDir = 0;
 			boolean found = false;
 			numTravelBackSteps = 0;
 			int ptr = wQueueReadPtr;
-			int dir = misc.direction(currentX, currentY, firstX, firstY);
-			if(dir != -1 && (dir&1) != 0) {
+			int dir = Misc.direction(currentX, currentY, firstX, firstY);
+			if (dir != -1 && (dir & 1) != 0) {
 				// we can't connect first and current directly
 				do {
 					lastDir = dir;
-					if(--ptr < 0) ptr = walkingQueueSize-1;
+					if (--ptr < 0)
+						ptr = walkingQueueSize - 1;
 
 					travelBackX[numTravelBackSteps] = walkingQueueX[ptr];
 					travelBackY[numTravelBackSteps++] = walkingQueueY[ptr];
-					dir = misc.direction(walkingQueueX[ptr], walkingQueueY[ptr], firstX, firstY);
-					if(lastDir != dir) {
+					dir = Misc.direction(walkingQueueX[ptr], walkingQueueY[ptr], firstX, firstY);
+					if (lastDir != dir) {
 						found = true;
-						break;		// either of those two, or a vertex between those is a candidate
+						break; // either of those two, or a vertex between those is a candidate
 					}
 
-				} while(ptr != wQueueWritePtr);
-			}
-			else found = true;	// we didn't need to go back in time because the current position
+				} while (ptr != wQueueWritePtr);
+			} else
+				found = true; // we didn't need to go back in time because the current position
 								// already can be connected to first
 
-			if(!found) {
+			if (!found) {
 				println_debug("Fatal: couldn't find connection vertex! Dropping packet.");
 				disconnected = true;
 			} else {
-				wQueueWritePtr = wQueueReadPtr;		// discard any yet unprocessed waypoints from queue
+				wQueueWritePtr = wQueueReadPtr; // discard any yet unprocessed waypoints from queue
 
-				addToWalkingQueue(currentX, currentY);	// have to add this in order to keep consistency in the queue
+				addToWalkingQueue(currentX, currentY); // have to add this in order to keep consistency in the queue
 
-				if(dir != -1 && (dir&1) != 0) {
-					// need to place an additional waypoint which lies between walkingQueue[numTravelBackSteps-2] and
+				if (dir != -1 && (dir & 1) != 0) {
+					// need to place an additional waypoint which lies between
+					// walkingQueue[numTravelBackSteps-2] and
 					// walkingQueue[numTravelBackSteps-1] but can be connected to firstX/firstY
 
-					for(int i = 0; i < numTravelBackSteps-1; i++) {
+					for (int i = 0; i < numTravelBackSteps - 1; i++) {
 						addToWalkingQueue(travelBackX[i], travelBackY[i]);
 					}
-					int wayPointX2 = travelBackX[numTravelBackSteps-1], wayPointY2 = travelBackY[numTravelBackSteps-1];
+					int wayPointX2 = travelBackX[numTravelBackSteps - 1],
+							wayPointY2 = travelBackY[numTravelBackSteps - 1];
 					int wayPointX1, wayPointY1;
-					if(numTravelBackSteps == 1) {
+					if (numTravelBackSteps == 1) {
 						wayPointX1 = currentX;
 						wayPointY1 = currentY;
+					} else {
+						wayPointX1 = travelBackX[numTravelBackSteps - 2];
+						wayPointY1 = travelBackY[numTravelBackSteps - 2];
 					}
-					else {
-						wayPointX1 = travelBackX[numTravelBackSteps-2];
-						wayPointY1 = travelBackY[numTravelBackSteps-2];
-					}
-					// we're coming from wayPoint1, want to go in direction wayPoint2 but only so far that
+					// we're coming from wayPoint1, want to go in direction wayPoint2 but only so
+					// far that
 					// we get a connection to first
 
 					// the easiest, but somewhat ugly way:
 					// maybe there is a better way, but it involves shitload of different
 					// cases so it seems like it isn't anymore
-					dir = misc.direction(wayPointX1, wayPointY1, wayPointX2, wayPointY2);
-					if(dir == -1 || (dir&1) != 0) {
-						println_debug("Fatal: The walking queue is corrupt! wp1=("+wayPointX1+", "+wayPointY1+"), "+
-							"wp2=("+wayPointX2+", "+wayPointY2+")");
-					}
-					else {
+					dir = Misc.direction(wayPointX1, wayPointY1, wayPointX2, wayPointY2);
+					if (dir == -1 || (dir & 1) != 0) {
+						println_debug("Fatal: The walking queue is corrupt! wp1=(" + wayPointX1 + ", " + wayPointY1
+								+ "), " + "wp2=(" + wayPointX2 + ", " + wayPointY2 + ")");
+					} else {
 						dir >>= 1;
 						found = false;
 						int x = wayPointX1, y = wayPointY1;
-						while(x != wayPointX2 || y != wayPointY2) {
-							x += misc.directionDeltaX[dir];
-							y += misc.directionDeltaY[dir];
-							if((misc.direction(x, y, firstX, firstY)&1) == 0) {
+						while (x != wayPointX2 || y != wayPointY2) {
+							x += Misc.directionDeltaX[dir];
+							y += Misc.directionDeltaY[dir];
+							if ((Misc.direction(x, y, firstX, firstY) & 1) == 0) {
 								found = true;
 								break;
 							}
 						}
-						if(!found) {
-							println_debug("Fatal: Internal error: unable to determine connection vertex!"+
-								"  wp1=("+wayPointX1+", "+wayPointY1+"), wp2=("+wayPointX2+", "+wayPointY2+"), "+
-								"first=("+firstX+", "+firstY+")");
-						}
-						else addToWalkingQueue(wayPointX1, wayPointY1);
+						if (!found) {
+							println_debug("Fatal: Internal error: unable to determine connection vertex!" + "  wp1=("
+									+ wayPointX1 + ", " + wayPointY1 + "), wp2=(" + wayPointX2 + ", " + wayPointY2
+									+ "), " + "first=(" + firstX + ", " + firstY + ")");
+						} else
+							addToWalkingQueue(wayPointX1, wayPointY1);
 					}
-				}
-				else {
-					for(int i = 0; i < numTravelBackSteps; i++) {
+				} else {
+					for (int i = 0; i < numTravelBackSteps; i++) {
 						addToWalkingQueue(travelBackX[i], travelBackY[i]);
 					}
 				}
 
-				// now we can finally add those waypoints because we made sure about the connection to first
-				for(int i = 0; i < newWalkCmdSteps; i++) {
+				// now we can finally add those waypoints because we made sure about the
+				// connection to first
+				for (int i = 0; i < newWalkCmdSteps; i++) {
 					addToWalkingQueue(newWalkCmdX[i], newWalkCmdY[i]);
 				}
 
@@ -878,7 +913,8 @@ public abstract class Player {
 	protected boolean IsStair = false;
 	protected boolean IsDeadTeleporting = false;
 	protected boolean IsDeadTimer = false;
-	protected void appendHitUpdate(stream str) {		
+
+	protected void appendHitUpdate(Stream str) {
 		try {
 			str.writeByte(hitDiff); // What the perseon got 'hit' for
 			if (hitDiff > 0) {
@@ -893,45 +929,52 @@ public abstract class Player {
 			}
 			str.writeByteC(NewHP); // Their current hp, for HP bar
 			str.writeByte(getLevelForXP(playerXP[playerHitpoints])); // Their max hp, for HP bar
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 	public int getLevelForXP(int exp) {
 		int points = 0;
 		int output = 0;
 
 		for (int lvl = 1; lvl <= 99; lvl++) {
-			points += Math.floor((double)lvl + 300.0 * Math.pow(2.0, (double)lvl / 7.0));
-			output = (int)Math.floor(points / 4);
+			points += Math.floor((double) lvl + 300.0 * Math.pow(2.0, (double) lvl / 7.0));
+			output = (int) Math.floor(points / 4);
 			if (output >= exp)
 				return lvl;
 		}
 		return 0;
 	}
-	public void appendDirUpdate(stream str) {
+
+	public void appendDirUpdate(Stream str) {
 		if (playerMD != -1) {
-			/*str.writeBits(2, 1);		// updateType
-			str.writeBits(3, misc.xlateDirectionToClient[playerMD]);
-			if(updateRequired) {
-				str.writeBits(1, 1);		// tell client there's an update block appended at the end
-			} else {
-				str.writeBits(1, 0);
-			}*/
-str.writeWord(playerMD);
+			/*
+			 * str.writeBits(2, 1); // updateType str.writeBits(3,
+			 * misc.xlateDirectionToClient[playerMD]); if(updateRequired) { str.writeBits(1,
+			 * 1); // tell client there's an update block appended at the end } else {
+			 * str.writeBits(1, 0); }
+			 */
+			str.writeWord(playerMD);
 			playerMD = -1;
 		}
 	}
-	public boolean[] IsDropped = new boolean[server.itemHandler.MaxDropItems];
-	public boolean[] MustDelete = new boolean[server.itemHandler.MaxDropItems];
+
+	public boolean[] IsDropped = new boolean[Server.itemHandler.MaxDropItems];
+	public boolean[] MustDelete = new boolean[Server.itemHandler.MaxDropItems];
 	public boolean IsDropping = false;
 
-	//PM Stuff
+	// PM Stuff
 	public abstract boolean isinpm(long l);
+
 	public abstract void loadpm(long l, int world);
+
 	public abstract void pmupdate(int pmid, int world);
+
 	public int Privatechat = 0;
-	public abstract void sendpm(long name,int rights,byte[] chatmessage, int messagesize);
+
+	public abstract void sendpm(long name, int rights, byte[] chatmessage, int messagesize);
+
 	public long friends[] = new long[200];
 	public long ignores[] = new long[100];
 	public boolean IsPMLoaded = false;
@@ -949,10 +992,10 @@ str.writeWord(playerMD);
 	public int StrPrayer = 0;
 	public int FightType = 1;
 	public int playerMaxHit = 0;
-	public int playerSE = 0x328; //SE = Standard Emotion
-	public int playerSEW = 0x333; //SEW = Standard Emotion Walking
-	public int playerSER = 0x338; //SER = Standard Emotion Run
-	public int playerSEA = 0x326; //SEA = Standard Emotion Attack
+	public int playerSE = 0x328; // SE = Standard Emotion
+	public int playerSEW = 0x333; // SEW = Standard Emotion Walking
+	public int playerSER = 0x338; // SER = Standard Emotion Run
+	public int playerSEA = 0x326; // SEA = Standard Emotion Attack
 	public int playerMD = -1;
 	protected boolean dirUpdateRequired = false;
 	public boolean IsCutting = false;
@@ -963,7 +1006,7 @@ str.writeWord(playerMD);
 	public boolean IsAttackingNPC = false;
 	public int attacknpc = -1;
 	public int Essence;
-	public boolean IsShopping = false;
+	public boolean isShopping = false;
 	public int MyShopID = 0;
 	public boolean UpdateShop = false;
 	public boolean RebuildNPCList = false;

@@ -1,13 +1,16 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class ItemHandler {
 	public static int DropItemCount = 0;
 	public static int MaxDropItems = 100000;
 	public static int MaxListedItems = 10000;
-							//process() is called evry 500 ms
-	public static int MaxDropShowDelay = 120; //120 * 500 = 60000 / 1000 = 60s
-	public static int SDID = 90; //90 * 500 = 45000 / 1000 = 45s
-					//SDID = Standard Drop Items Delay
+	// process() is called evry 500 ms
+	public static int MaxDropShowDelay = 120; // 120 * 500 = 60000 / 1000 = 60s
+	public static int SDID = 90; // 90 * 500 = 45000 / 1000 = 45s
+	// SDID = Standard Drop Items Delay
 	public static int[] DroppedItemsID = new int[MaxDropItems];
 	public static int[] DroppedItemsX = new int[MaxDropItems];
 	public static int[] DroppedItemsY = new int[MaxDropItems];
@@ -21,10 +24,10 @@ public class ItemHandler {
 	public ItemList ItemList[] = new ItemList[MaxListedItems];
 
 	ItemHandler() {
-		for(int i = 0; i < MaxDropItems; i++) {
+		for (int i = 0; i < MaxDropItems; i++) {
 			ResetItem(i);
 		}
-		for(int i = 0; i < MaxListedItems; i++) {
+		for (int i = 0; i < MaxListedItems; i++) {
 			ItemList[i] = null;
 		}
 		loadItemList("item.cfg");
@@ -32,7 +35,7 @@ public class ItemHandler {
 	}
 
 	public void process() {
-		for(int i = 0; i < MaxDropItems; i++) {
+		for (int i = 0; i < MaxDropItems; i++) {
 			if (DroppedItemsID[i] > -1) {
 				if (DroppedItemsDDelay[i] > -10) {
 					DroppedItemsDDelay[i]--;
@@ -41,9 +44,9 @@ public class ItemHandler {
 					DroppedItemsSDelay[i]++;
 				}
 				if (DroppedItemsSDelay[i] >= MaxDropShowDelay && DroppedItemsAlwaysDrop[i] == false) {
-					for (int j = 1; j < server.playerHandler.maxPlayers; j++) {
-						if (server.playerHandler.players[j] != null) {
-							server.playerHandler.players[j].MustDelete[i] = true;
+					for (int j = 1; j < Server.playerHandler.maxPlayers; j++) {
+						if (Server.playerHandler.players[j] != null) {
+							Server.playerHandler.players[j].MustDelete[i] = true;
 						}
 					}
 				}
@@ -74,18 +77,18 @@ public class ItemHandler {
 		int ReadMode = 0;
 		BufferedReader characterfile = null;
 		try {
-			characterfile = new BufferedReader(new FileReader("./"+FileName));
-		} catch(FileNotFoundException fileex) {
-			misc.println(FileName+": file not found.");
+			characterfile = new BufferedReader(new FileReader("./assets/config/" + FileName));
+		} catch (FileNotFoundException fileex) {
+			Misc.println(FileName + ": file not found.");
 			return false;
 		}
 		try {
 			line = characterfile.readLine();
-		} catch(IOException ioexception) {
-			misc.println(FileName+": error loading file.");
+		} catch (IOException ioexception) {
+			Misc.println(FileName + ": error loading file.");
 			return false;
 		}
-		while(EndOfFile == false && line != null) {
+		while (EndOfFile == false && line != null) {
 			line = line.trim();
 			int spot = line.indexOf("=");
 			if (spot > -1) {
@@ -110,19 +113,28 @@ public class ItemHandler {
 				}
 			} else {
 				if (line.equals("[ENDOFDROPLIST]")) {
-					try { characterfile.close(); } catch(IOException ioexception) { }
+					try {
+						characterfile.close();
+					} catch (IOException ioexception) {
+					}
 					return true;
 				}
 			}
 			try {
 				line = characterfile.readLine();
-			} catch(IOException ioexception1) { EndOfFile = true; }
+			} catch (IOException ioexception1) {
+				EndOfFile = true;
+			}
 		}
-		try { characterfile.close(); } catch(IOException ioexception) { }
+		try {
+			characterfile.close();
+		} catch (IOException ioexception) {
+		}
 		return false;
 	}
 
-	public void newItemList(int ItemId, String ItemName, String ItemDescription, double ShopValue, double LowAlch, double HighAlch, int Bonuses[]) {
+	public void newItemList(int ItemId, String ItemName, String ItemDescription, double ShopValue, double LowAlch,
+			double HighAlch, int Bonuses[]) {
 		// first, search for a free slot
 		int slot = -1;
 		for (int i = 0; i < MaxListedItems; i++) {
@@ -132,7 +144,8 @@ public class ItemHandler {
 			}
 		}
 
-		if(slot == -1) return;		// no free slot found
+		if (slot == -1)
+			return; // no free slot found
 
 		ItemList newItemList = new ItemList(ItemId);
 		newItemList.itemName = ItemName;
@@ -154,18 +167,18 @@ public class ItemHandler {
 		int ReadMode = 0;
 		BufferedReader characterfile = null;
 		try {
-			characterfile = new BufferedReader(new FileReader("./"+FileName));
-		} catch(FileNotFoundException fileex) {
-			misc.println(FileName+": file not found.");
+			characterfile = new BufferedReader(new FileReader("./assets/config/" + FileName));
+		} catch (FileNotFoundException fileex) {
+			Misc.println(FileName + ": file not found.");
 			return false;
 		}
 		try {
 			line = characterfile.readLine();
-		} catch(IOException ioexception) {
-			misc.println(FileName+": error loading file.");
+		} catch (IOException ioexception) {
+			Misc.println(FileName + ": error loading file.");
 			return false;
 		}
-		while(EndOfFile == false && line != null) {
+		while (EndOfFile == false && line != null) {
 			line = line.trim();
 			int spot = line.indexOf("=");
 			if (spot > -1) {
@@ -188,19 +201,29 @@ public class ItemHandler {
 							break;
 						}
 					}
-					newItemList(Integer.parseInt(token3[0]), token3[1].replaceAll("_", " "), token3[2].replaceAll("_", " "), Double.parseDouble(token3[4]), Double.parseDouble(token3[4]), Double.parseDouble(token3[6]), Bonuses);
+					newItemList(Integer.parseInt(token3[0]), token3[1].replaceAll("_", " "),
+							token3[2].replaceAll("_", " "), Double.parseDouble(token3[4]),
+							Double.parseDouble(token3[4]), Double.parseDouble(token3[6]), Bonuses);
 				}
 			} else {
 				if (line.equals("[ENDOFITEMLIST]")) {
-					try { characterfile.close(); } catch(IOException ioexception) { }
+					try {
+						characterfile.close();
+					} catch (IOException ioexception) {
+					}
 					return true;
 				}
 			}
 			try {
 				line = characterfile.readLine();
-			} catch(IOException ioexception1) { EndOfFile = true; }
+			} catch (IOException ioexception1) {
+				EndOfFile = true;
+			}
 		}
-		try { characterfile.close(); } catch(IOException ioexception) { }
+		try {
+			characterfile.close();
+		} catch (IOException ioexception) {
+		}
 		return false;
 	}
 }
